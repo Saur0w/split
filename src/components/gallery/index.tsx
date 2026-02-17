@@ -17,6 +17,13 @@ export default function Gallery({ handle}: GalleryProps) {
                     fill
                 />
             </div>
+            <div className={styles.vignetter}>
+                <Image
+                    src={`/images/${handle}/1.jpg`}
+                    alt="vignetter"
+                    layout="fill"
+                    />
+            </div>
         </section>
     )
 }
