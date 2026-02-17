@@ -2,6 +2,8 @@
 
 import styles from "./page.module.css";
 import Gallery from "@/components/gallery/index";
+import Lenis from 'lenis';
+import { useEffect } from "react";
 
 interface Project {
     name: string;
@@ -28,6 +30,22 @@ const projects: Project[] = [
 ];
 
 export default function Home() {
+
+    useEffect(() => {
+        const lenis = new Lenis();
+
+        function raf(time: number) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+
+        return () => {
+            lenis.destroy();
+        };
+    }, []);
+
     return (
         <main className={styles.main}>
             {
