@@ -3,7 +3,8 @@
 import styles from "./page.module.css";
 import Gallery from "@/components/Gallery/index";
 import Lenis from 'lenis';
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef } from "react";
+import gsap from "gsap";
 import {useGSAP} from "@gsap/react";
 
 interface Project {
@@ -32,13 +33,13 @@ const projects: Project[] = [
 
 export default function Home() {
 
-    const mousePosition = {
-        x: useRef(0),
-        y: useRef(0)
-    };
+    const xRef = useRef(0);
+    const yRef = useRef(0);
+    const xTo = useRef<gsap.QuickToFunc | null>(null);
+    const yTo = useRef<gsap.QuickToFunc | null>(null);
 
-    const xTo = useRef<gsap.QuickToFunc>();
-    const yTo = useRef<gsap.QuickToFunc>();
+    const mousePosition = { x: xRef, y: yRef };
+
 
     useEffect(() => {
         const lenis = new Lenis();
