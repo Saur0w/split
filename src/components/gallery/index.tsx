@@ -12,7 +12,7 @@ export default function Gallery({ handle}: GalleryProps) {
         <section className={styles.gallery}>
             <div className={styles.imageContainer}>
                 <Image
-                    src={`/images/${handle}/1.jpg`}
+                    src={`/images/${handle}/background.jpg`}
                     alt="image"
                     fill
                 />
