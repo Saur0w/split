@@ -6,6 +6,7 @@ import Lenis from 'lenis';
 import React, {useEffect, useRef } from "react";
 import gsap from "gsap";
 import {useGSAP} from "@gsap/react";
+import Des from "@/components/Des/index";
 
 interface Project {
     name: string;
@@ -91,6 +92,7 @@ export default function Home() {
                     );
                 })
             }
+            <Des mousePosition={mousePosition} projects={projects} />
         </main>
     )
 }
