@@ -94,5 +94,5 @@ export default function Home() {
             }
             <Des mousePosition={mousePosition} projects={projects} />
         </main>
-    )
+    );
 }
