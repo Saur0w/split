@@ -1,9 +1,10 @@
 "use client";
 
 import styles from "./page.module.css";
-import Gallery from "@/components/gallery/index";
+import Gallery from "@/components/Gallery/index";
 import Lenis from 'lenis';
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
+import {useGSAP} from "@gsap/react";
 
 interface Project {
     name: string;
@@ -31,7 +32,13 @@ const projects: Project[] = [
 
 export default function Home() {
 
-    const [mousePosition, setMousePosition] = useState({x: 0, y: 0});
+    const mousePosition = {
+        x: useRef(0),
+        y: useRef(0)
+    };
+
+    const xTo = useRef<gsap.QuickToFunc>();
+    const yTo = useRef<gsap.QuickToFunc>();
 
     useEffect(() => {
         const lenis = new Lenis();
@@ -48,15 +55,39 @@ export default function Home() {
         };
     }, []);
 
-    const mouseMove = (e: React.MouseEvent) => {
+    useGSAP(() => {
+        xTo.current = gsap.quickTo(mousePosition.x, "current", {
+            duration: 0.8,
+            ease: "power3"
+        });
 
+        yTo.current = gsap.quickTo(mousePosition.y, "current", {
+            duration: 0.8,
+            ease: "power3"
+        })
+    }, []);
+
+    const mouseMove = (e: React.MouseEvent) => {
+        const { clientX, clientY } = e;
+
+        const targetX = clientX - (window.innerWidth / 2 * 0.25);
+        const targetY = clientY - (window.innerHeight / 2 * 0.30);
+
+        if (xTo.current) xTo.current(targetX);
+        if (yTo.current) yTo.current(targetY);
     }
 
     return (
         <main onMouseMove={mouseMove} className={styles.main}>
             {
-                projects.map(({handle}, i) => {
-                    return <Gallery handle={handle} key={i}/>
+                projects.map(({ handle }, i) => {
+                    return (
+                        <Gallery
+                            mousePosition={mousePosition}
+                            handle={handle}
+                            key={i}
+                        />
+                    );
                 })
             }
         </main>
